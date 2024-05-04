@@ -1,0 +1,43 @@
+﻿/*
+ * Default Convention 
+ * Bire çok ilişkiyi Default Convention yöntemile yapmak ,
+ * Foreign key vermezsek dahi kendisi otomatikoluşturur
+ * Biz Foreign key'i vermeden de Default Convention yöntemi otomatik oluşturur
+ * Örenğin aşaığıda bulunan ilişkilere göre migration oluşturudğumuzda personel tablosunda entity Adını içeren bir kolon yaniproperty oluşturur 
+ */
+
+using System.ComponentModel.DataAnnotations.Schema;
+
+public class Personel
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string LastName { get; set; }
+    public Department Department { get; set; } //Tekil Navigation Property
+
+    [ForeignKey("Department")]
+    public int DepId { get; set; } //Personel tablosunda adı DepId olan bir foreign key oluşturuyor 
+
+    public Task Task { get; set; } //Tekil Navigation Property
+
+    [ForeignKey("Task")]
+    public int TaskId { get; set; } //Personel tablosunda adı DepId olan bir foreign key oluşturuyor 
+
+}
+
+public class Department
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+
+    public ICollection<Personel> Personels { get; set; } //Çoğul Navigation Property 
+}
+
+public class Task
+{
+    public int TaskId { get; set; }
+
+    public string TaskName { get; set; }
+    public ICollection<Personel> Personels { get; set; } //Çoğul Navigation Property 
+}
